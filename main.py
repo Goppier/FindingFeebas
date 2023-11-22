@@ -17,6 +17,13 @@ class Route119:
 		self.render = ImageTk.PhotoImage(image)
 		img = self.canvas.create_image(192, 960, image=self.render)
 		self.canvas.place(relx=0.25,rely=0.5,anchor=CENTER)
+        
+		self.canvas2 = Canvas(self.root, width=320, height=560, bg="white")
+		image = Image.open('./Recources/Finding_Feebas_BG.jpg')
+		resized_image= image.resize((325,565))
+		self.render2 = ImageTk.PhotoImage(resized_image)
+		img = self.canvas2.create_image(160, 280, image=self.render2)
+		self.canvas2.place(relx=0.75,rely=0.5,anchor=CENTER)
 		
 		self.current_image_xpos = 192
 		self.current_image_ypos = 960
@@ -134,8 +141,8 @@ class Route119:
 		image = Image.open("./Recources/Hoenn_Route_119_E.png").convert('RGBA')
 		watermark = Image.open("./Recources/Feebas_Spot_Indicator.png").convert('RGBA')
 		layer = Image.new('RGBA', image.size, (0, 0, 0, 0))
-		print(self.feebas_calcs.getSecretId())
-		self.sid_entry.config(text=str(self.feebas_calcs.getSecretId()))
+		#print(self.feebas_calcs.getSecretId())
+		#self.sid_entry.config(text=str(self.feebas_calcs.getSecretId()))
 		calculated_spots = self.feebas_calcs.getFeebasSpotCoordinates()
 		for xy in calculated_spots:
 			layer.paste(watermark, (xy[0], xy[1]))
@@ -144,6 +151,7 @@ class Route119:
 		layer2.putalpha(180)
 		layer.paste(layer2, layer)
 		result = Image.alpha_composite(image, layer)
+		#result.save("NewImage.png")
 		self.render = ImageTk.PhotoImage(result)
 		img = self.canvas.create_image(self.current_image_xpos, self.current_image_ypos, image=self.render)
 		
@@ -171,8 +179,8 @@ class Route119:
 			self.current_image_xpos = 16*20
 		elif(self.current_image_xpos < 0):
 			self.current_image_xpos = 0
-		if(self.current_image_ypos > 16*60):
-			self.current_image_ypos = 16*60
+		if(self.current_image_ypos > 16*70):
+			self.current_image_ypos = 16*70
 		elif(self.current_image_ypos < -16*12):
 			self.current_image_ypos = -16*12
 		self.current_mouse_xpos = e.x
