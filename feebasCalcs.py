@@ -2,7 +2,7 @@ from tkinter import ttk
 from tkinter import *
 
 from trendyPhrase import group_conditions, group_lifestyles, group_hobbies, DewfordTrend
-from FeebasCoordinates import FEEBAS_COORDINATES
+from feebasCoordinates import FEEBAS_COORDINATES
 
 class FeebasCalculator:
     def __init__(self, trainer_id, lottery_number, trendy_phrase_1, trendy_phrase_2, is_rs):	
