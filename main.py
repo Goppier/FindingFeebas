@@ -141,6 +141,12 @@ class Route119:
         spot_button = ttk.Button(root, text='6', command= lambda: self.goToFeebasSpot(5), state= DISABLED, width=4)
         spot_button.place(x=320*6/7+320, y=500, anchor="center")
         self.feebas_spot_buttons.append(spot_button)
+        
+        
+        self.is_fixed_game = IntVar()
+        self.is_fixed_game.set(0)
+        fixed_game_checkbox = ttk.Checkbutton(self.root, text='Fixed Game',variable=self.is_fixed_game, onvalue=1, offvalue=0)
+        fixed_game_checkbox.place(x=320/7+320, y=540, anchor="center")
 
     def goToFeebasSpot(self, spot_id):
         """
@@ -182,8 +188,8 @@ class Route119:
         Args:
             self: The class itself
         """
-        # GIve the parameters to the FeebasCalculator and check if it could find a feebas. If not, then make a noise to let the user know about this.
-        self.feebas_calcs = FeebasCalculator(self.tid_entry.get(), self.lot_enrty.get(), self.drop1.get(), self.drop2.get(), self.is_emerald.get())
+        # Give the parameters to the FeebasCalculator and check if it could find a feebas. If not, then make a noise to let the user know about this.
+        self.feebas_calcs = FeebasCalculator(self.tid_entry.get(), self.lot_enrty.get(), self.drop1.get(), self.drop2.get(), self.is_emerald.get(), self.is_fixed_game.get())
         
         if(self.feebas_calcs.isFeebasFound() == False):
             self.root.bell()

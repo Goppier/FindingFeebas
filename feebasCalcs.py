@@ -10,7 +10,7 @@ from tkinter import ttk
 from tkinter import *
 
 from trendyPhrase import group_conditions, group_lifestyles, group_hobbies, DewfordTrend
-from feebasCoordinates import FEEBAS_COORDINATES
+from feebasCoordinates import FEEBAS_BRIDGE_TILES, FEEBAS_COORDINATES_ORIGINAL, FEEBAS_COORDINATES_NEW
 
 DEBUG_ENABLED = False
 
@@ -19,7 +19,7 @@ class FeebasCalculator:
     This class calculates the exact spots of where Feebas is located based on the Trainer ID, the Lottery Number and the Trendy Phrase.
     This class can only find Feebas if a new game has started without a working battery. 
     """
-    def __init__(self, trainer_id, lottery_number, trendy_phrase_1, trendy_phrase_2, is_emerald):
+    def __init__(self, trainer_id, lottery_number, trendy_phrase_1, trendy_phrase_2, is_emerald, is_fixed_game):
         """
         This function initialises AND calculates the Feebas spots based on the parameters given.
 
@@ -75,17 +75,26 @@ class FeebasCalculator:
          
         # Seed the RNG with the value found for the Trendy Phrase
         self.seedRng(self.feebas_seed)
-        
+
         # Calculate the actual Feebas spots
         x = 0
+        add_bridge_tiles = False
         while(x != 6):
-            feebas_id = self.getRandomValue() % 447
+            feebas_id = self.getFeebasRandomValue() % 447
             if(feebas_id == 0):
                 feebas_id = 447
-            if(feebas_id >= 4):
-                self.calculated_feebas_spots.append(FEEBAS_COORDINATES[feebas_id])
+            if((is_fixed_game == False and feebas_id >= 4)):    
+                self.calculated_feebas_spots.append(FEEBAS_COORDINATES_ORIGINAL[feebas_id])
                 x += 1
-
+                if(feebas_id == 132):
+                    add_bridge_tiles = True
+            elif(is_fixed_game == TRUE):
+                self.calculated_feebas_spots.append(FEEBAS_COORDINATES_NEW[feebas_id])
+                x += 1
+        if(add_bridge_tiles == True):
+            for tile in FEEBAS_BRIDGE_TILES:
+                self.calculated_feebas_spots.append(tile)
+                
     def isFeebasFound(self):
         """
         This function indicates if the class has found the Feebas spots or not
@@ -110,7 +119,6 @@ class FeebasCalculator:
             self.calculated_feebas_spots: An array containing the 6 Feebas spot coordinates
         """
         return self.calculated_feebas_spots
-        
     
     def seedRng(self, seed):
         """
@@ -121,10 +129,23 @@ class FeebasCalculator:
             seed: A 32 bit value containing the seed for the RNG
         """
         self.random_value = seed & 0xFFFFFFFF
-        
+    
+    def getFeebasRandomValue(self):
+        """
+        This function progresses the RNG once and returns the newly generated value for the Feebas RNG
+
+        Args:
+            self: The class itself
+        Returns:
+            self.random_value: The upper 16 bits of the randomly generated value.
+        """
+        self.random_value = 0x41C64E6D * self.random_value + 0x00003039
+        self.random_value &= 0xFFFFFFFF
+        return (self.random_value >> 16)    
+    
     def getRandomValue(self):
         """
-        This function progresses the RNG once and returns the newly generated value
+        This function progresses the RNG once and returns the newly generated value for the Regular RNG
 
         Args:
             self: The class itself
