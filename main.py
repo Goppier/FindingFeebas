@@ -9,17 +9,17 @@ pressing buttons and checking the input on the entry boxes.
 from feebasCalcs import FeebasCalculator
 from trendyPhrase import group_conditions, group_lifestyles, group_hobbies
 
-from tkinter import ttk
+import platform
+import tkinter
 from tkinter import *
 from ttkwidgets.autocomplete import AutocompleteCombobox
 from PIL import Image, ImageTk
 
-ROUTE119_PATH         = "./Resources/Images/Hoenn_Route_119_E.png"
-FINDING_FEEBAS_ART    = "./Resources/Images/Finding_Feebas_BG.jpg"
-FEEBAS_SPOT_INDICATOR = "./Resources/Images/Feebas_Spot_Indicator.png"
-ROUTE119_INITAL_X_POS = 192
-ROUTE119_INITAL_Y_POS = 960
-HACKY_FEEBAS_BUTTON_INIT = [0, 1, 2, 3, 4, 5]
+ROUTE119_PATH              = "./Resources/Images/Hoenn_Route_119_E.png"
+FINDING_FEEBAS_ART_PATH    = "./Resources/Images/Finding_Feebas_BG.jpg"
+FEEBAS_SPOT_INDICATOR_PATH = "./Resources/Images/Feebas_Spot_Indicator.png"
+ROUTE119_INITAL_X_POS      = 192
+ROUTE119_INITAL_Y_POS      = 960
 
 class Route119:
     """
@@ -34,6 +34,39 @@ class Route119:
             root: The root of the tkinter Finding Feebas Application
         """
         self.root = root
+        
+        # initialise the font for the program
+        if(platform.system() == "Windows"):
+            desired_font = tkinter.font.Font(family = "Segoe UI", size = 9, weight = "normal")
+            dropdown_x1 = 408  
+            dropdown_x2 = 552
+            dropdown_width = 17
+            secret_id_label_place_x = 375
+            secret_id_entry_place_x = 510
+            secret_id_entry_width = 29
+            feebas_button_width = 4
+            fixed_game_checkbox_x = 370
+        elif(platform.system() == "Linux"):
+            desired_font = tkinter.font.Font(family = "Segoe UI", size = 9, weight = "normal")
+            dropdown_x1 = 404
+            dropdown_x2 = 556
+            dropdown_width = 15
+            secret_id_label_place_x = 353
+            secret_id_entry_place_x = 514
+            secret_id_entry_width = 31
+            feebas_button_width = 2
+            fixed_game_checkbox_x = 375
+        elif(platform.system() == "Darwin"):
+            desired_font = tkinter.font.Font(family = "Segoe UI", size = 9, weight = "normal")
+            dropdown_x1 = 404
+            dropdown_x2 = 556
+            dropdown_width = 15
+            secret_id_label_place_x = 353
+            secret_id_entry_place_x = 514
+            secret_id_entry_width = 31
+            feebas_button_width = 0
+            fixed_game_checkbox_x = 375
+
 
         # Initialise the map on the left
         self.map_canvas = Canvas(self.root, width=320, height=560, bg="white")
@@ -44,7 +77,7 @@ class Route119:
 
         # Initialise the art on the right
         self.art_canvas = Canvas(self.root, width=320, height=560, bg="white")
-        image = Image.open(FINDING_FEEBAS_ART)
+        image = Image.open(FINDING_FEEBAS_ART_PATH)
         resized_image= image.resize((325,565))
         self.art_render = ImageTk.PhotoImage(resized_image)
         self.art_canvas.create_image(160, 280, image=self.art_render)
@@ -61,28 +94,28 @@ class Route119:
         # Initialise the checkbox for Ruby/Sapphire and Emerald. It is coded so that a variable will be 1 if Emerald is selected.
         self.is_emerald = IntVar()
         self.is_emerald.set(0)
-        ruby_sapphire_checkbox = ttk.Checkbutton(self.root, text='Ruby/Sapphire',variable=self.is_emerald, onvalue=0, offvalue=1)
+        ruby_sapphire_checkbox = Checkbutton(self.root, text='Ruby/Sapphire',variable=self.is_emerald, onvalue=0, offvalue=1, font=desired_font)
         ruby_sapphire_checkbox.place(x=320*0.55/2+320, y=150, anchor="center")
-        emerald_checkbox = ttk.Checkbutton(self.root, text='Emerald',variable=self.is_emerald, onvalue=1, offvalue=0)
+        emerald_checkbox = Checkbutton(self.root, text='Emerald',variable=self.is_emerald, onvalue=1, offvalue=0, font=desired_font)
         emerald_checkbox.place(x=320*1.45/2+320, y=150, anchor="center")
 
         # Initialise the label and entry box for the Trainder ID and the Lottery ID
         validate_command_function = (self.root.register(self.validateNumber), '%d', '%i', '%P', '%s', '%S', '%v', '%V', '%W')
 
-        tid_label = ttk.Label(root, text='Trainer ID')
+        tid_label = Label(root, text='Trainer ID', font=desired_font)
         tid_label.place(x=320*1.5/7+320, y=200, anchor="w")
 
         sv = StringVar()
         sv.trace("w", lambda name, index, mode, sv=sv: self.maxNumberCallback(sv, 0xFFFF, 0))
-        self.tid_entry = ttk.Entry(root, validate="key", validatecommand=validate_command_function, textvariable=sv, width=10)
+        self.tid_entry = Entry(root, validate="key", validatecommand=validate_command_function, textvariable=sv, width=10, font=desired_font)
         self.tid_entry.place(x=320*3.5/7+320, y=200, anchor="w")
 
-        lot_label = ttk.Label(root, text='Lottery No.')
+        lot_label = Label(root, text='Lottery No.', font=desired_font)
         lot_label.place(x=320*1.5/7+320, y=225, anchor="w")
 
         sv = StringVar()
         sv.trace("w", lambda name, index, mode, sv=sv: self.maxNumberCallback(sv, 0xFFFF, 1))
-        self.lot_enrty = ttk.Entry(root, validate="key", validatecommand=validate_command_function, textvariable=sv, width=10)
+        self.lot_enrty = Entry(root, validate="key", validatecommand=validate_command_function, textvariable=sv, width=10, font=desired_font)
         self.lot_enrty.place(x=320*3.5/7+320, y=225, anchor="w")
         
         # Initialise the lists for the trendhy phrase and place them in a dropdown menu   
@@ -92,61 +125,63 @@ class Route119:
         self.trendy_phrase_2 = group_lifestyles + group_hobbies
         self.trendy_phrase_2.sort()
   
-        self.drop1 = AutocompleteCombobox(root, completevalues=self.trendy_phrase_1)
-        self.drop1.place(x=320*0.55/2+320, y=360, anchor="center")
-        self.drop1.config(width = 17)
+        self.dropdown_phrase_1 = AutocompleteCombobox(root, completevalues=self.trendy_phrase_1, font=desired_font)
+        self.dropdown_phrase_1.place(x=dropdown_x1, y=360, anchor="center")
+        self.dropdown_phrase_1.config(width = dropdown_width)
         
-        self.drop2 = AutocompleteCombobox(root, completevalues=self.trendy_phrase_2)
-        self.drop2.place(x=320*1.45/2+320, y=360, anchor="center")
-        self.drop2.config(width = 17)
+        self.dropdown_phrase_2 = AutocompleteCombobox(root, completevalues=self.trendy_phrase_2, font=desired_font)
+        self.dropdown_phrase_2.place(x=dropdown_x2, y=360, anchor="center")
+        self.dropdown_phrase_2.config(width = dropdown_width)
         
         # Initialise the buttons to calculate and clear the feebas spots 
-        calculate_button = ttk.Button(root, text='Calculate', command=self.calculateFeebasSpots, state= NORMAL)
+        calculate_button = Button(root, text='Calculate', command=self.calculateFeebasSpots, state= NORMAL, font=desired_font)
         calculate_button.place(x=320*2/7+320, y=410, anchor="center")
-        clear_button = ttk.Button(root, text='Clear', command=self.clearFeebasSpots, state= NORMAL)
+        calculate_button.config(width = 10)
+        clear_button = Button(root, text='Clear', command=self.clearFeebasSpots, state= NORMAL, font=desired_font)
         clear_button.place(x=320*5/7+320, y=410, anchor="center")
+        clear_button.config(width = 10)
         
         # Initialise label and unusable entry box for Secret ID
-        secret_id_label = ttk.Label(root, text='Secret ID:')
-        secret_id_label.place(x=320*1.2/7+320, y=455, anchor="center")
+        secret_id_label = Label(root, text='Secret ID:', font=desired_font)
+        secret_id_label.place(x=secret_id_label_place_x, y=455, anchor="center")
         
-        self.secret_id_entry = ttk.Label(root, text='')
-        self.secret_id_entry.place(x=320*4.15/7+320, y=455, anchor="center")
+        self.secret_id_entry = Label(root, text='', font=desired_font)
+        self.secret_id_entry.place(x=secret_id_entry_place_x, y=455, anchor="center")
         self.secret_id_entry.config(background='#c5cedb')
-        self.secret_id_entry.config(width = 33)
+        self.secret_id_entry.config(width = secret_id_entry_width)
         
         # Initialise the 6 buttons to find the feebas spots in the map.
         self.feebas_spot_buttons = []
             
-        spot_button = ttk.Button(root, text='1', command= lambda: self.goToFeebasSpot(0), state= DISABLED, width=4)
+        spot_button = Button(root, text='1', command= lambda: self.goToFeebasSpot(0), state= DISABLED, width=feebas_button_width, font=desired_font)
         spot_button.place(x=320/7+320, y=500, anchor="center")
         self.feebas_spot_buttons.append(spot_button)
         
-        spot_button = ttk.Button(root, text='2', command= lambda: self.goToFeebasSpot(1), state= DISABLED, width=4)
+        spot_button = Button(root, text='2', command= lambda: self.goToFeebasSpot(1), state= DISABLED, width=feebas_button_width, font=desired_font)
         spot_button.place(x=320*2/7+320, y=500, anchor="center")
         self.feebas_spot_buttons.append(spot_button)
         
-        spot_button = ttk.Button(root, text='3', command= lambda: self.goToFeebasSpot(2), state= DISABLED, width=4)
+        spot_button = Button(root, text='3', command= lambda: self.goToFeebasSpot(2), state= DISABLED, width=feebas_button_width, font=desired_font)
         spot_button.place(x=320*3/7+320, y=500, anchor="center")
         self.feebas_spot_buttons.append(spot_button)
         
-        spot_button = ttk.Button(root, text='4', command= lambda: self.goToFeebasSpot(3), state= DISABLED, width=4)
+        spot_button = Button(root, text='4', command= lambda: self.goToFeebasSpot(3), state= DISABLED, width=feebas_button_width, font=desired_font)
         spot_button.place(x=320*4/7+320, y=500, anchor="center")
         self.feebas_spot_buttons.append(spot_button)
 
-        spot_button = ttk.Button(root, text='5', command= lambda: self.goToFeebasSpot(4), state= DISABLED, width=4)
+        spot_button = Button(root, text='5', command= lambda: self.goToFeebasSpot(4), state= DISABLED, width=feebas_button_width, font=desired_font)
         spot_button.place(x=320*5/7+320, y=500, anchor="center")
         self.feebas_spot_buttons.append(spot_button)
         
-        spot_button = ttk.Button(root, text='6', command= lambda: self.goToFeebasSpot(5), state= DISABLED, width=4)
+        spot_button = Button(root, text='6', command= lambda: self.goToFeebasSpot(5), state= DISABLED, width=feebas_button_width, font=desired_font)
         spot_button.place(x=320*6/7+320, y=500, anchor="center")
         self.feebas_spot_buttons.append(spot_button)
         
         
         self.is_fixed_game = IntVar()
         self.is_fixed_game.set(0)
-        fixed_game_checkbox = ttk.Checkbutton(self.root, text='Fixed Game',variable=self.is_fixed_game, onvalue=1, offvalue=0)
-        fixed_game_checkbox.place(x=320/7+320, y=540, anchor="center")
+        fixed_game_checkbox = Checkbutton(self.root, text='Fixed Game',variable=self.is_fixed_game, onvalue=1, offvalue=0, font=desired_font)
+        fixed_game_checkbox.place(x=fixed_game_checkbox_x, y=540, anchor="center")
 
     def goToFeebasSpot(self, spot_id):
         """
@@ -189,7 +224,7 @@ class Route119:
             self: The class itself
         """
         # Give the parameters to the FeebasCalculator and check if it could find a feebas. If not, then make a noise to let the user know about this.
-        self.feebas_calcs = FeebasCalculator(self.tid_entry.get(), self.lot_enrty.get(), self.drop1.get(), self.drop2.get(), self.is_emerald.get(), self.is_fixed_game.get())
+        self.feebas_calcs = FeebasCalculator(self.tid_entry.get(), self.lot_enrty.get(), self.dropdown_phrase_1.get(), self.dropdown_phrase_2.get(), self.is_emerald.get(), self.is_fixed_game.get())
         
         if(self.feebas_calcs.isFeebasFound() == False):
             self.root.bell()
@@ -206,7 +241,7 @@ class Route119:
         
         # Prepare the map and spot indicator
         map_image = Image.open(ROUTE119_PATH).convert('RGBA')
-        indicator_image = Image.open(FEEBAS_SPOT_INDICATOR).convert('RGBA')
+        indicator_image = Image.open(FEEBAS_SPOT_INDICATOR_PATH).convert('RGBA')
         map_layer = Image.new('RGBA', map_image.size, (0, 0, 0, 0))
 
         # Get the calculated spots and place the indicator in the map
@@ -339,7 +374,8 @@ if __name__ == "__main__":
     root.wm_title("Finding Feebas")
     root.geometry("640x560")
     root.resizable(0,0)
-    root.iconbitmap(default='Resources/Icon/LogoGoppier.ico')
+    if(platform.system() == "Windows"):
+        root.iconbitmap(default='Resources/Icon/LogoGoppier.ico')
     
     app = Route119(root)
 
