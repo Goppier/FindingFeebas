@@ -171,8 +171,9 @@ class FeebasCalculator:
         
     def findFeebasStartingPoint(self):
         """
-        This function finds the starting point for the Trendy Phrase calculation based on the Lottory Number. It does this by progressing the RNG
-        20000 frames (around 5,5 minutes) forward and saves all moments the RNG generated the given Lottory Number in an array.
+        This function finds the starting point for the Trendy Phrase calculation based on the Lottory 
+        Number. It does this by progressing the RNG 20000 frames (around 5,5 minutes) forward and saves 
+        all moments the RNG generated the given Lottory Number in an array.
 
         Args:
             self: The class itself
@@ -186,9 +187,10 @@ class FeebasCalculator:
                         
     def findTrendyPhraseRubySapphire(self, lottery_seed):
         """
-        This function generates the dewford phrases for Ruby and Sapphire based on the lottory seed that was found before. It first find the starting 
-        point using the Trainer ID. Afterwards the Dewford Phrases are generated. If the last RNG call made ends with the Lottory Number and the Trendiest 
-        Phrase matches, then Feebas is found successfully!
+        This function generates the dewford phrases for Ruby and Sapphire based on the lottory seed that was 
+        found before. It first find the starting point using the Trainer ID. Afterwards the Dewford Phrases 
+        are generated. If the last RNG call made ends with the Lottory Number and the Trendiest Phrase 
+        matches, then Feebas is found successfully!
 
         Args:
             self: The class itself
