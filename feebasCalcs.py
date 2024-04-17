@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 """
 feebasCalcs.py
 
@@ -165,15 +167,15 @@ class FeebasCalculator:
         Returns:
             self.random_value: The upper 16 bits of the previous random value.
         """
-        self.random_value = 0xEEB9EB65 * self.random_value + 0x0A3561A1;
+        self.random_value = 0xEEB9EB65 * self.random_value + 0x0A3561A1
         self.random_value &= 0xFFFFFFFF
         return (self.random_value >> 16)
         
     def findFeebasStartingPoint(self):
         """
-        This function finds the starting point for the Trendy Phrase calculation based on the Lottory 
+        This function finds the starting point for the Trendy Phrase calculation based on the Lottery 
         Number. It does this by progressing the RNG 20000 frames (around 5,5 minutes) forward and saves 
-        all moments the RNG generated the given Lottory Number in an array.
+        all moments the RNG generated the given Lottery Number in an array.
 
         Args:
             self: The class itself
@@ -187,14 +189,14 @@ class FeebasCalculator:
                         
     def findTrendyPhraseRubySapphire(self, lottery_seed):
         """
-        This function generates the dewford phrases for Ruby and Sapphire based on the lottory seed that was 
+        This function generates the dewford phrases for Ruby and Sapphire based on the lottery seed that was 
         found before. It first find the starting point using the Trainer ID. Afterwards the Dewford Phrases 
-        are generated. If the last RNG call made ends with the Lottory Number and the Trendiest Phrase 
+        are generated. If the last RNG call made ends with the Lottery Number and the Trendiest Phrase 
         matches, then Feebas is found successfully!
 
         Args:
             self: The class itself
-            lottery_seed: The seed of the RNG which generated the Lottory Number
+            lottery_seed: The seed of the RNG which generated the Lottery Number
         """
         lottery_no = 0
         final_trendy_prase = ["NO", "FEEBAS"]
@@ -221,7 +223,7 @@ class FeebasCalculator:
         self.generateDewfordPhrases()
         final_trendy_prase = self.dewford_trends[0].getPhrase()
         
-        # Generate the lottory number
+        # Generate the lottery number
         lottery_no = self.getRandomValue()
         
         # Check all the values. If it all matches, then Feebas is found!!
@@ -236,13 +238,13 @@ class FeebasCalculator:
 
     def findTrendyPhraseEmerald(self, lottery_seed):
         """
-        This function generates the dewford phrases for Ruby and Sapphire based on the lottory seed that was found before. Emerald doesn't have a clear
-        starting point, so we need to regress a variable amount of time until we Trendy Phrase and the Lottory ID matches up. If this happens, then we have
+        This function generates the dewford phrases for Ruby and Sapphire based on the lottery seed that was found before. Emerald doesn't have a clear
+        starting point, so we need to regress a variable amount of time until we Trendy Phrase and the Lottery ID matches up. If this happens, then we have
         found Feebas successfully! It also tries to find the Secret ID, but it is possible however to find more than one Secret ID...
 
         Args:
             self: The class itself
-            lottery_seed: The seed of the RNG which generated the Lottory Number
+            lottery_seed: The seed of the RNG which generated the Lottery Number
         """
 
         reverse_steps = 50
@@ -266,7 +268,7 @@ class FeebasCalculator:
             self.generateDewfordPhrases()
             final_trendy_prase = self.dewford_trends[0].getPhrase()
 
-            # Generate the lottory number
+            # Generate the lottery number
             lottery_no = self.getRandomValue()
                 
             # Check all the values. If it all matches, then Feebas is found!!

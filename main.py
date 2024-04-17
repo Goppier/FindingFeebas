@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """
 main.py
 
@@ -57,13 +58,13 @@ class Route119:
             feebas_button_width = 2
             fixed_game_checkbox_x = 375
         elif(platform.system() == "Darwin"):
-            desired_font = tkinter.font.Font(family = "Segoe UI", size = 9, weight = "normal")
-            dropdown_x1 = 404
-            dropdown_x2 = 556
-            dropdown_width = 15
-            secret_id_label_place_x = 353
-            secret_id_entry_place_x = 514
-            secret_id_entry_width = 31
+            desired_font = tkinter.font.Font(family = '.AppleSystemUIFont', size = 11, weight = "normal") 
+            dropdown_x1 = 400
+            dropdown_x2 = 560
+            dropdown_width = 17
+            secret_id_label_place_x = 370
+            secret_id_entry_place_x = 512
+            secret_id_entry_width = 30
             feebas_button_width = 0
             fixed_game_checkbox_x = 375
 
