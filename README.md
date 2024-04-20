@@ -5,7 +5,7 @@ You will first need to download and install Python for the OS you are using. You
 
 https://www.python.org/downloads/
 
-Once Python has been installed, open the terminal and type in the following command:
+Once Python has been installed, open the terminal and type in the following commands:
 - pip3 install tkinter
 - pip3 install ttkwidgets
 
