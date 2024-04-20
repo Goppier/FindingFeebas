@@ -12,6 +12,7 @@ from trendyPhrase import group_conditions, group_lifestyles, group_hobbies
 
 import platform
 import tkinter
+from tkinter import ttk
 from tkinter import *
 from ttkwidgets.autocomplete import AutocompleteCombobox
 from PIL import Image, ImageTk
@@ -38,17 +39,17 @@ class Route119:
         
         # initialise the font for the program
         if(platform.system() == "Windows"):
-            desired_font = tkinter.font.Font(family = "Segoe UI", size = 9, weight = "normal")
+            desired_font = tkinter.font.nametofont("TkDefaultFont")
             dropdown_x1 = 408  
             dropdown_x2 = 552
             dropdown_width = 17
             secret_id_label_place_x = 375
             secret_id_entry_place_x = 510
-            secret_id_entry_width = 29
+            secret_id_entry_width = 34
             feebas_button_width = 4
             fixed_game_checkbox_x = 370
         elif(platform.system() == "Linux"):
-            desired_font = tkinter.font.Font(family = "Segoe UI", size = 9, weight = "normal")
+            desired_font = tkinter.font.nametofont("TkDefaultFont")
             dropdown_x1 = 404
             dropdown_x2 = 556
             dropdown_width = 15
@@ -146,7 +147,7 @@ class Route119:
         secret_id_label = Label(root, text='Secret ID:', font=desired_font)
         secret_id_label.place(x=secret_id_label_place_x, y=455, anchor="center")
         
-        self.secret_id_entry = Label(root, text='', font=desired_font)
+        self.secret_id_entry = ttk.Label(root, text='', font=desired_font)
         self.secret_id_entry.place(x=secret_id_entry_place_x, y=455, anchor="center")
         self.secret_id_entry.config(background='#c5cedb')
         self.secret_id_entry.config(width = secret_id_entry_width)
