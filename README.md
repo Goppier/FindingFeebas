@@ -7,6 +7,7 @@ https://www.python.org/downloads/
 
 Once Python has been installed, open the terminal and type in the following command:
 - pip3 install tkinter
+- pip3 install ttkwidgets
 
 ## Step 2: Download the Repository and Run the Code
 1. Download the entire source code from the latest release on github and unzip it.
