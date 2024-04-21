@@ -11,7 +11,7 @@ Once Python has been installed, open the terminal and type in the following comm
 
 ## Step 2: Download the Repository and Run the Code
 1. Download the entire source code from the latest release on github and unzip it.
-2. Use the terminal to navigate to the unzipped folder. You can also open a new terminal in the unzipped folder. This can usually be done easily by holding "shift" and then press the right mouse button while in the folder using the file explorer.
+2. Use the terminal to navigate to the unzipped folder. You can also open a new terminal in the unzipped folder. This can usually be done easily by holding "shift" and then press the right mouse button on an empty area in the folder using the file explorer.
 3. Type in the command below to run the tool!
     - python3 main.py
 
