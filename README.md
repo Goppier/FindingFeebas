@@ -1,12 +1,12 @@
 # Finding Feebas
 In this repository you will find the python code to a tool to find Feebas more quickly in your games! Before you can use it, there are a few things you will need to install if you don't have it already.
 ## Step 1: Install Python and Libraries
-You will first need to download and install Python for the OS you are using. You find Python using the link below:
+You will first need to download and install Python for the OS you are using. For Windows it is recommended to install using the offical Microsoft Store. You find Python using the link below as well:
 
 https://www.python.org/downloads/
 
 Once Python has been installed, open the terminal and type in the following commands:
-- pip3 install tkinter
+- pip3 install tk
 - pip3 install ttkwidgets
 
 ## Step 2: Download the Repository and Run the Code
